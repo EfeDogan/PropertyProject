@@ -64,6 +64,7 @@ plt.show()
 
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 # separate data into test and training
@@ -73,9 +74,11 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # start model
 tree_reg = DecisionTreeRegressor()
+linear_reg = LinearRegression()
 
 # train model
 tree_reg.fit(X_train, y_train)
+linear_reg.fit(X_train, y_train)
 
 
 # Model evaluation function
@@ -87,16 +90,22 @@ def evaluate_model(model, X_test, y_test):
 
 
 tree_reg_mse, tree_reg_r2 = evaluate_model(tree_reg, X_test, y_test)
+linear_reg_mse, linear_reg_r2 = evaluate_model(linear_reg, X_test, y_test)
 
 print(f'Decision Tree Regression MSE: {tree_reg_mse}, R-square: {tree_reg_r2}')
+print(f'Linear Regression MSE: {linear_reg_mse}, R-square: {linear_reg_r2}')
 
-predicts = tree_reg.predict(data_predict)
+
+predicts = linear_reg.predict(data_predict)
 print(f'Results: {predicts}')
 
 # Add the predicted prices to the prediction data DataFrame
+
+
 data_predict['predicted_price'] = predicts
 
 submission['price'] = predicts
 
 # Save the results to a CSV file
 submission.to_csv('submission.csv', index=False)
+
