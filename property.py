@@ -20,8 +20,6 @@ data_predict.drop_duplicates(inplace=True)
 data_train['date'] = pd.to_datetime(data_train['date'])
 #data_train = pd.get_dummies(data_train, columns=['statezip'])
 
-
-
 data_predict['date'] = pd.to_datetime(data_predict['date'])
 #data_predict = pd.get_dummies(data_predict, columns=['statezip'])
 
@@ -39,7 +37,7 @@ numeric_features = ['price', 'sqft_living', 'sqft_lot', 'sqft_above', 'sqft_base
 data_train[numeric_features] = scaler.fit_transform(data_train[numeric_features])
 
 # drop non-numeric columns
-data_train = data_train.drop(columns=['street', 'country','date','city','statezip']) #
+data_train = data_train.drop(columns=['street', 'country','date','city','statezip']) 
 data_predict = data_predict.drop(columns=['street', 'country','date','city','statezip'])
 submission = submission.drop(columns=['price'])
 
@@ -96,13 +94,8 @@ print(f'Decision Tree Regression MSE: {tree_reg_mse}, R-square: {tree_reg_r2}')
 print(f'Linear Regression MSE: {linear_reg_mse}, R-square: {linear_reg_r2}')
 
 
-predicts = linear_reg.predict(data_predict)
+predicts = linear_reg.predict(data_predict) # changeable model 
 print(f'Results: {predicts}')
-
-# Add the predicted prices to the prediction data DataFrame
-
-
-data_predict['predicted_price'] = predicts
 
 submission['price'] = predicts
 
